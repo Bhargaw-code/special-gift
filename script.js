@@ -243,4 +243,83 @@ const msgs = [
 if ($('cBtn')) {$('cBtn').onclick = () => {
     const name = $('cName').value.trim().toLowerCase().replace(/\s+/g, ' ');
     if (!name) {
-      if ($('cRes'))$('cRes').
+      if ($('cRes'))$('cRes').textContent = 'Enter a name first.';
+      return;
+    }
+    if ($('cRes'))$('cRes').textContent = '';
+    if ($('loader')) $('loader').classList.remove('hide');$('cBtn').disabled = true;
+
+    const t0 = Date.now();
+    const iv = setInterval(() => {
+      const p = Math.min((Date.now() - t0) / 5000, 1);
+      if ($('barFill'))$('barFill').style.width = p * 100 + '%';
+      if ($('loadMsg'))$('loadMsg').textContent = msgs[Math.min(Math.floor(p * msgs.length), msgs.length - 1)];
+
+      if (p < 1) return;
+      clearInterval(iv);
+      if ($('loader')) $('loader').classList.add('hide');$('cBtn').disabled = false;
+      const ok = CONFIG.validNames.includes(name);
+      if ($('cRes'))$('cRes').textContent = ok ? '100% compatible' : '0% compatible';
+      if (ok) hearts(10);
+    }, 100);
+  };
+}
+
+/* ===== PARTICLES ===== */
+const fx = $('fx');
+if (fx) {
+  const c = fx.getContext('2d');
+  const HP = new Path2D('M12 20.5C5.5 15.2 3 12.2 3 8.9 3 6.2 5 4.5 7.3 4.5c1.9 0 3.7 1.2 4.7 3 1-1.8 2.8-3 4.7-3C19 4.5 21 6.2 21 8.9c0 3.3-2.5 6.3-9 11.6z');
+  let P = [];
+
+  const resize = () => { fx.width = window.innerWidth; fx.height = window.innerHeight; };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const add = (type, num, up) => {
+    for (let i = 0; i < num; i++) {
+      P.push({
+        type,
+        up,
+        x: Math.random() * fx.width,
+        y: up ? fx.height + 20 + Math.random() * 200 : -20 - Math.random() * 300,
+        s: type === 'h' ? 0.5 + Math.random() * 0.7 : 5 + Math.random() * 5,
+        v: 0.4 + Math.random() * 0.6,
+        w: Math.random() * 6,
+        r: Math.random() * 6
+      });
+    }
+  };
+
+  window.hearts = n => add('h', n, true);
+  window.petals = n => add('p', n, false);
+  hearts(8);
+
+  (function loop() {
+    c.clearRect(0, 0, fx.width, fx.height);
+    P.forEach(p => {
+      p.y += p.up ? -p.v : p.v;
+      p.w += 0.015;
+      p.r += 0.01;
+      p.x += Math.sin(p.w) * 0.5;
+      c.save();
+      c.translate(p.x, p.y);
+      c.rotate(p.type === 'p' ? p.r : 0);
+      if (p.type === 'h') {
+        c.scale(p.s, p.s);
+        c.strokeStyle = 'rgba(231,163,176,0.55)';
+        c.lineWidth = 1.2;
+        c.stroke(HP);
+      } else {
+        c.fillStyle = 'rgba(247,225,228,0.6)';
+        c.beginPath();
+        c.ellipse(0, 0, p.s, p.s / 2, 0, 0, 7);
+        c.fill();
+      }
+      c.restore();
+    });
+    P = P.filter(p => p.up ? p.y > -40 : p.y < fx.height + 20);
+    if (P.filter(p => p.type === 'h').length < 5) hearts(1);
+    requestAnimationFrame(loop);
+  })();
+}
