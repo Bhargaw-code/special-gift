@@ -56,3 +56,19 @@ select option{color:#222}::placeholder{color:#ffffff77}
 .res{font:500 1.4rem 'Cormorant Garamond',serif;color:var(--gold);min-height:1.4em;text-align:center}.res.big{font-size:2.6rem}
 .bar{height:3px;background:#ffffff26;border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--gold))}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* Force interactive elements to be clickable on top */
+#fx {
+  pointer-events: none !important;
+}
+
+.screen {
+  position: relative;
+  z-index: 1;
+}
+
+button, input, select, textarea {
+  position: relative;
+  z-index: 2;
+  pointer-events: auto !important;
+  cursor: pointer;
+}
