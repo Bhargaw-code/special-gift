@@ -7,12 +7,12 @@ Hello meri pyari gudiya, I Love You too much itna ki tum soch bhi nhi sakti. Bas
 Always yours,
 Raj`,
   loveText: "You are my peace, my smile and my favourite person.you are my everything.Bas kahi jana mat",
-  main: { src: "images/main.jpg", text: "Hamari abhi tak ki sabse close or best photo" },
+  main: { src: "main.jpg", text: "Hamari abhi tak ki sabse close or best photo" },
   photos: [
-    { src: "images/photo1.jpg", text: "Sabse cute photo" },
-    { src: "images/photo2.jpg", text: "Hamesha hamko chedti rahti ho" },
-    { src: "images/photo3.jpg", text: "Ye meri bithday party now your turn" },
-    { src: "images/photo4.jpg", text: "Hamari sabse pahali sath me photo" }
+    { src: "photo1.jpg", text: "Sabse cute photo" },
+    { src: "photo2.jpg", text: "Hamesha hamko chedti rahti ho" },
+    { src: "photo3.jpg", text: "Ye meri bithday party now your turn" },
+    { src: "photo4.jpg", text: "Hamari sabse pahali sath me photo" }
   ],
   prizes: ["A new dress", "Lots of chocolates", "Picnic date", "A day with me", "Custom wish", "Movie night"],
   validNames: ["raj", "raj kumar bhargaw", "raj kumar", "bhargaw"]
@@ -27,28 +27,23 @@ $('herName').textContent = CONFIG.herName;
 document.querySelectorAll('.nm').forEach(e => e.textContent = CONFIG.herName);
 $('letterText').textContent = CONFIG.letter;
 $('loveText').textContent = CONFIG.loveText;
-img($('mainImg'), CONFIG.main.src); $('mainCap').textContent = CONFIG.main.text;
+img($('mainImg'), CONFIG.main.src);$('mainCap').textContent = CONFIG.main.text;
 
 /* Letter */
-$('letter').onclick = () => $('modal').classList.add('open');
-$('closeLetter').onclick = () => $('modal').classList.remove('open');
-$('modal').onclick = e => { if (e.target.id === 'modal') $('modal').classList.remove('open'); };
-$('surpriseBtn').onclick = () => { show('s2'); hearts(6); };
+$('letter').onclick = () => $('modal').classList.add('open');$('closeLetter').onclick = () => $('modal').classList.remove('open');$('modal').onclick = e => { if (e.target.id === 'modal') $('modal').classList.remove('open'); };$('surpriseBtn').onclick = () => { show('s2'); hearts(6); };
 
 /* Yes / No */
 const noTexts = ["guddiya no nhi yes chhose karo 🥺", "soch lo mere sath jana hai ki nhi 🤨", "Sitarnaki 😤🙈"];
 let n = 0;
 $('noBtn').onclick = () => {
   if (n >= noTexts.length) { $('noBtn').style.display = 'none'; return; }
-  $('noBtn').textContent = noTexts[n++];
-  $('yesBtn').style.transform = `scale(${1 + n * 0.15})`;
+  $('noBtn').textContent = noTexts[n++];$('yesBtn').style.transform = `scale(${1 + n * 0.15})`;
 };
 $('yesBtn').onclick = () => { show('s3'); hearts(6); };
 
 /* Plan */
 $('planBtn').onclick = () => {
-  const v = id => $(id).value || '-';
-  $('summary').textContent = `${v('pDate')} at ${v('pTime')}\nCoffee at ${v('pPlace')}\nThen ${v('pMovie')} with ${v('pSnack')}\n${$('pNote').value}`;
+  const v = id => $(id).value \vert{}\vert{} '-';$('summary').textContent = `${v('pDate')} at ${v('pTime')}\nCoffee at ${v('pPlace')}\nThen ${v('pMovie')} with ${v('pSnack')}\n${$('pNote').value}`;
   show('s4'); initScratch(); petals(14); buildCar();
 };
 
@@ -80,11 +75,9 @@ function initScratch() {
 function buildCar() {
   if ($('car').children.length) return;
   $('car').innerHTML = CONFIG.photos.map(() => '<figure class="slide"><img alt=""><p></p></figure>').join('');
-  [...$('car').children].forEach((f, i) => { img(f.querySelector('img'), CONFIG.photos[i].src); f.querySelector('p').textContent = CONFIG.photos[i].text; });
-  $('dots').innerHTML = CONFIG.photos.map((_, i) => `<b class="${i ? '' : 'on'}"></b>`).join('');
+  [...$('car').children].forEach((f, i) => { img(f.querySelector('img'), CONFIG.photos[i].src); f.querySelector('p').textContent = CONFIG.photos[i].text; });$('dots').innerHTML = CONFIG.photos.map((_, i) => `<b class="${i ? '' : 'on'}"></b>`).join('');
   $('car').onscroll = () => {
-    const c = $('car'), i = Math.round(c.scrollLeft / (c.scrollWidth - c.clientWidth) * (CONFIG.photos.length - 1));
-    [...$('dots').children].forEach((d, j) => d.classList.toggle('on', i === j));
+    const c = $('car'), i = Math.round(c.scrollLeft / (c.scrollWidth - c.clientWidth) * (CONFIG.photos.length - 1)); [...$('dots').children].forEach((d, j) => d.classList.toggle('on', i === j));
   };
 }
 
@@ -97,28 +90,24 @@ CONFIG.prizes.forEach((t, i) => {
 });
 let rot = 0, busy = false;
 $('spinBtn').onclick = () => {
-  if (busy) return; busy = true; $('spinRes').textContent = ''; $('customBox').classList.add('hide');
+  if (busy) return; busy = true; $('spinRes').textContent = '';$('customBox').classList.add('hide');
   const win = Math.floor(Math.random() * N), target = 270 - (win * arc + arc / 2) * 180 / Math.PI;
   rot += 360 * 6 + ((target - rot % 360) % 360 + 360) % 360;
   wc.style.transform = `rotate(${rot}deg)`;
   setTimeout(() => {
     busy = false; $('spinRes').textContent = 'You won: ' + CONFIG.prizes[win]; hearts(6);
-    if (win === 4) $('customBox').classList.remove('hide');
-  }, 5200);
-};
-$('customSend').onclick = () => { const t = $('customText').value.trim(); $('customRes').textContent = t ? `Wish received: "${t}". Your wish is my command.` : 'Write your wish first.'; };
+    if (win === 4) $('customBox').classList.remove('hide'); }, 5200); };$('customSend').onclick = () => { const t = $('customText').value.trim();$('customRes').textContent = t ? `Wish received: "${t}". Your wish is my command.` : 'Write your wish first.'; };
 
 /* Compatibility calculator */
 const msgs = ["Reading your names...", "Analysing heartbeats...", "Matching smiles...", "Comparing dreams...", "Counting stars together...", "Calculating love..."];
 $('cBtn').onclick = () => {
   const name = $('cName').value.trim().toLowerCase().replace(/\s+/g, ' ');
-  if (!name) { $('cRes').textContent = 'Enter a name first.'; return; }
-  $('cRes').textContent = ''; $('loader').classList.remove('hide'); $('cBtn').disabled = true;
+  if (!name) { $('cRes').textContent = 'Enter a name first.'; return; }$('cRes').textContent = ''; $('loader').classList.remove('hide');$('cBtn').disabled = true;
   const t0 = Date.now(), iv = setInterval(() => {
     const p = Math.min((Date.now() - t0) / 5000, 1);
-    $('barFill').style.width = p * 100 + '%'; $('loadMsg').textContent = msgs[Math.min(Math.floor(p * msgs.length), msgs.length - 1)];
+    $('barFill').style.width = p * 100 + '\%';$('loadMsg').textContent = msgs[Math.min(Math.floor(p * msgs.length), msgs.length - 1)];
     if (p < 1) return;
-    clearInterval(iv); $('loader').classList.add('hide'); $('cBtn').disabled = false;
+    clearInterval(iv); $('loader').classList.add('hide');$('cBtn').disabled = false;
     const ok = CONFIG.validNames.includes(name);
     $('cRes').textContent = ok ? '100% compatible' : '0% compatible';
     if (ok) hearts(10);
